@@ -4,388 +4,835 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SJP - Sampoorna Janta Party</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    }
+
+    :root {
+      --primary: #ff6a00;
+      --secondary: #ff8c42;
+      --dark: #0a0e27;
+      --darker: #060918;
+      --light: #f8f9fa;
+      --gray: #64748b;
     }
 
     body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--darker);
+      color: var(--light);
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
-    /* Navbar */
     nav {
       position: fixed;
+      top: 0;
       width: 100%;
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-between;
-      padding: 15px 40px;
+      align-items: center;
+      padding: 20px 8%;
+      background: rgba(10, 14, 39, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 106, 0, 0.1);
       z-index: 1000;
+      transition: all 0.3s ease;
     }
 
-    nav h1 {
-      color: #ff6a00;
+    nav.scrolled {
+      padding: 15px 8%;
+      background: rgba(10, 14, 39, 0.95);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
-    nav a {
-      margin: 0 10px;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
+    }
+
+    .logo h1 {
+      font-size: 24px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--light);
       text-decoration: none;
-      color: black;
       font-weight: 500;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
-    nav a:hover {
-      color: #ff6a00;
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
     }
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
 
-body {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: white;
-}
+    .nav-links a:hover {
+      color: var(--primary);
+    }
 
-/* Section */
-#leaders {
-  padding: 80px 20px;
-body {
-  background: #0b0f1a;
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-}
+    .nav-links a:hover::after {
+      width: 100%;
+    }
 
-/* Section */
-#leaders {
-  padding: 80px 20px;
-  text-align: center;
-  color: white;
-}
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
 
-#leaders h2 {
-  font-size: 2.5rem;
-  margin-bottom: 50px;
-}
+    .burger span {
+      width: 28px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
 
-/* Layout */
-.cards {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
 
-/* Banner Card */
-.card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255,255,255,0.03);
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  transition: 0.5s ease;
-}
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
 
-/* Glow Border */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 2px;
-  border-radius: 20px;
-  background: linear-gradient(120deg, #ff6a00, #ffb347, #ff6a00);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-}
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
 
-/* Image Section */
-.card-img {
-  width: 50%;
-  height: 250px;
-  overflow: hidden;
-  position: relative;
-}
-
-.card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: 0.6s ease;
-}
-
-/* Gradient Overlay */
-.card-img::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
-}
-
-/* Hover Zoom */
-.card:hover img {
-  transform: scale(1.1);
-}
-
-/* Content */
-.card-content {
-  width: 50%;
-  padding: 30px;
-  text-align: left;
-}
-
-/* Name */
-.card-content h3 {
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #ff6a00, #ffb347);
-  -webkit-background-clip: text;
-  color: transparent;
-  margin-bottom: 10px;
-  transform: translateX(-30px);
-  opacity: 0;
-  transition: 0.5s ease;
-}
-
-/* Position */
-.card-content p {
-  font-size: 1rem;
-  color: #cbd5e1;
-  transform: translateX(-30px);
-  opacity: 0;
-  transition: 0.5s ease 0.2s;
-}
-
-/* Slide animation */
-.card:hover h3,
-.card:hover p {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-/* Light streak */
-.card::after {
-  content: "";
-  position: absolute;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-  top: 0;
-  left: -100%;
-  transition: 0.6s;
-}
-
-.card:hover::after {
-  left: 100%;
-}
-
-/* 3D Tilt */
-.card:hover {
-  transform: rotateY(5deg) scale(1.02);
-}
-
-/* Responsive */
-@media(max-width: 768px) {
-  .card {
-    flex-direction: column;
-  }
-  .card-img, .card-content {
-    width: 100%;
-  }
-  .card-img {
-    height: 200px;
-  }
-}
-  text-align: center;
-}
-
-#leaders h2 {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-
-
-    /* Hero */
     .hero {
       height: 100vh;
-      background: linear-gradient(to right, #ff6a00, #ff8c00);
       display: flex;
-      justify-content: center;
       align-items: center;
-      color: white;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 106, 0, 0.15), transparent);
+      top: -200px;
+      right: -200px;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 140, 66, 0.1), transparent);
+      bottom: -150px;
+      left: -150px;
+      animation: pulse 5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    .hero-content {
       text-align: center;
+      z-index: 2;
+      max-width: 900px;
+      padding: 0 20px;
     }
 
     .hero h1 {
-      font-size: 60px;
-    }
-
-    .hero button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      border: none;
-      background: white;
-      color: #ff6a00;
-      font-size: 18px;
-      border-radius: 25px;
-      cursor: pointer;
-    }
-
-    .hero button:hover {
-      background: #ffe0cc;
-    }
-
-    /* Sections */
-    section {
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    h2 {
-      color: #ff6a00;
+      font-size: clamp(40px, 8vw, 80px);
+      font-weight: 700;
       margin-bottom: 20px;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 0%, #ff6a00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    /* Cards */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-      gap: 20px;
-      padding: 20px;
+    .hero p {
+      font-size: clamp(18px, 3vw, 24px);
+      color: var(--gray);
+      margin-bottom: 40px;
+      font-weight: 300;
     }
 
-    .card {
-      background: #f5f5f5;
-      padding: 30px;
-      border-radius: 15px;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-    }
-
-    /* Footer */
-    footer {
-      background: #111;
+    .cta-btn {
+      padding: 16px 48px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
-      padding: 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(255, 106, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .cta-btn:hover::before {
+      left: 100%;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 106, 0, 0.4);
+    }
+
+    section {
+      padding: 100px 8%;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title p {
+      color: var(--gray);
+      font-size: 18px;
+      font-weight: 300;
+    }
+
+    #about {
+      background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+    }
+
+    .about-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--gray);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .about-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 40px 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 106, 0, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .about-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255, 106, 0, 0.3);
+      box-shadow: 0 20px 40px rgba(255, 106, 0, 0.1);
+    }
+
+    .about-card h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .about-card p {
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    #leaders {
+      background: var(--darker);
+    }
+
+    .leaders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .leader-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 106, 0, 0.1);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .leader-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .leader-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .leader-card:hover {
+      transform: translateY(-15px);
+      border-color: rgba(255, 106, 0, 0.3);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .leader-img {
+      width: 100%;
+      height: 350px;
+      overflow: hidden;
+      position: relative;
+      background: var(--dark);
+    }
+
+    .leader-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.5s ease;
+    }
+
+    .leader-card:hover .leader-img img {
+      transform: scale(1.1);
+    }
+
+    .leader-info {
+      padding: 30px;
       text-align: center;
     }
 
+    .leader-info h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--light);
+      font-weight: 600;
+    }
+
+    .leader-info p {
+      color: var(--primary);
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    #vision {
+      background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+    }
+
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .vision-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 40px 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 106, 0, 0.1);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .vision-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255, 106, 0, 0.3);
+      box-shadow: 0 20px 40px rgba(255, 106, 0, 0.15);
+    }
+
+    .vision-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 25px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: 0 10px 30px rgba(255, 106, 0, 0.3);
+    }
+
+    .vision-card h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: var(--light);
+    }
+
+    .vision-card p {
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    #contact {
+      background: var(--darker);
+    }
+
+    .contact-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 50px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 106, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--light);
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 106, 0, 0.2);
+      border-radius: 10px;
+      color: var(--light);
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(255, 106, 0, 0.2);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(255, 106, 0, 0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 106, 0, 0.4);
+    }
+
+    .success-msg {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 10px;
+      color: #22c55e;
+      text-align: center;
+      display: none;
+    }
+
+    footer {
+      background: var(--dark);
+      padding: 60px 8% 30px;
+      border-top: 1px solid rgba(255, 106, 0, 0.1);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 20px;
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    .footer-section p,
+    .footer-section a {
+      color: var(--gray);
+      line-height: 1.8;
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 106, 0, 0.1);
+      color: var(--gray);
+    }
+
+    @media (max-width: 768px) {
+      .burger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        max-width: 350px;
+        background: rgba(10, 14, 39, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        transition: right 0.4s ease;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links a {
+        font-size: 20px;
+      }
+
+      section {
+        padding: 60px 5%;
+      }
+
+      .contact-container {
+        padding: 30px 20px;
+      }
+
+      .leaders-grid,
+      .vision-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        padding: 15px 5%;
+      }
+
+      .logo h1 {
+        font-size: 20px;
+      }
+
+      .logo-img {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
-
 <body>
 
-<!-- Navbar -->
-<nav>
-  <h1>SJP</h1>
-  <div>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#leaders">Leadership</a>
-    <a href="#join">Join</a>
-  </div>
-</nav>
+  <nav id="navbar">
+    <div class="logo">
+      <div class="logo-img">SJP</div>
+      <h1>Sampoorna Janta Party</h1>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#leaders">Leadership</a></li>
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="burger" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
 
-<!-- Hero -->
-<section class="hero" id="home">
-  <div>
-    <h1>Sampoorna Janta Party</h1>
-    <p>Voice of Every Citizen</p>
-    <button onclick="scrollToJoin()">Join Us</button>
-  </div>
-</section>
+  <section class="hero" id="home">
+    <div class="hero-content" data-aos="fade-up">
+      <h1>Sampoorna Janta Party</h1>
+      <p>Voice of Every Citizen, Building Tomorrow Together</p>
+      <button class="cta-btn" onclick="scrollToContact()">Join Our Movement</button>
+    </div>
+  </section>
 
-<!-- About -->
-<section id="about">
-  <h2>About Us</h2>
-  <p>SJP is a people-first political party focused on development, transparency and equality.</p>
-</section>
-
-<!-- Leadership -->
-<section id="leaders">
-  <h2>Our Leadership</h2>
-
-  <div class="cards">
-
-    <!-- Card 1 -->
-    <div class="card">
-      <div class="card-img">
-        <img src="https://i.ibb.co/V0BN5K5M/IMG-20260318-WA0001.jpg">
+  <section id="about">
+    <div class="section-title" data-aos="fade-up">
+      <h2>About Us</h2>
+      <p>Building a better tomorrow through transparency, development, and equality</p>
+    </div>
+    <div class="about-content" data-aos="fade-up" data-aos-delay="100">
+      <p>Sampoorna Janta Party is a people-first political organization dedicated to transforming governance through transparency, inclusive development, and unwavering commitment to equality. We believe in empowering every citizen and creating opportunities for all.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>Transparency</h3>
+        <p>We believe in open governance and accountability to the people we serve.</p>
       </div>
-      <div class="card-content">
-        <h3>Raviranjan Jha</h3>
-        <p>National President</p>
+      <div class="about-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>Development</h3>
+        <p>Focused on sustainable growth and infrastructure that benefits everyone.</p>
+      </div>
+      <div class="about-card" data-aos="fade-up" data-aos-delay="300">
+        <h3>Equality</h3>
+        <p>Committed to creating equal opportunities regardless of background.</p>
       </div>
     </div>
+  </section>
 
-    <!-- Card 2 -->
-    <div class="card">
-      <div class="card-img">
-        <img src="https://i.ibb.co/xK4H2gdw/IMG-20251104-113247.jpg">
+  <section id="leaders">
+    <div class="section-title" data-aos="fade-up">
+      <h2>Our Leadership</h2>
+      <p>Meet the team driving change and progress</p>
+    </div>
+    <div class="leaders-grid">
+      <div class="leader-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="leader-img">
+          <img src="https://i.ibb.co/V0BN5K5M/IMG-20260318-WA0001.jpg" alt="Raviranjan Jha">
+        </div>
+        <div class="leader-info">
+          <h3>Raviranjan Jha</h3>
+          <p>National President</p>
+        </div>
       </div>
-      <div class="card-content">
-        <h3>Atul Mishra</h3>
-        <p>Vice President</p>
+      <div class="leader-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="leader-img">
+          <img src="https://i.ibb.co/xK4H2gdw/IMG-20251104-113247.jpg" alt="Atul Mishra">
+        </div>
+        <div class="leader-info">
+          <h3>Atul Mishra</h3>
+          <p>Vice President</p>
+        </div>
+      </div>
+      <div class="leader-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="leader-img">
+          <img src="https://i.ibb.co/7x5W7RFJ/IMG-20260318-WA0003.jpg" alt="Pranav Patel">
+        </div>
+        <div class="leader-info">
+          <h3>Pranav Patel</h3>
+          <p>General Secretary</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Card 3 -->
-    <div class="card">
-      <div class="card-img">
-        <img src="https://i.ibb.co/7x5W7RFJ/IMG-20260318-WA0003.jpg">
+  <section id="vision">
+    <div class="section-title" data-aos="fade-up">
+      <h2>Our Vision & Mission</h2>
+      <p>What we stand for and strive to achieve</p>
+    </div>
+    <div class="vision-grid">
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="vision-icon">🎯</div>
+        <h3>Our Vision</h3>
+        <p>To create a society where every citizen has equal opportunities and voice in governance.</p>
       </div>
-      <div class="card-content">
-        <h3>Pranav Patel</h3>
-        <p>General Secretary</p>
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="vision-icon">🚀</div>
+        <h3>Our Mission</h3>
+        <p>Deliver transparent governance, sustainable development, and social justice for all.</p>
+      </div>
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="vision-icon">💡</div>
+        <h3>Our Values</h3>
+        <p>Integrity, accountability, inclusivity, and commitment to democratic principles.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Join -->
-<section id="join">
-  <h2>Join Us</h2>
-  <p>Become part of the movement</p>
+  <section id="contact">
+    <div class="section-title" data-aos="fade-up">
+      <h2>Join Our Movement</h2>
+      <p>Be part of the change you want to see</p>
+    </div>
+    <div class="contact-container" data-aos="fade-up" data-aos-delay="100">
+      <form onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter your phone number" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us why you want to join..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Submit Application</button>
+        <div class="success-msg" id="successMsg">Thank you for joining! We'll be in touch soon.</div>
+      </form>
+    </div>
+  </section>
 
-  <form onsubmit="submitForm(event)">
-    <input type="text" placeholder="Name" required><br><br>
-    <input type="email" placeholder="Email" required><br><br>
-    <button type="submit">Submit</button>
-  </form>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Sampoorna Janta Party</h3>
+        <p>Building a better tomorrow through transparency, development, and equality for all citizens.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#leaders">Leadership</a>
+        <a href="#vision">Vision</a>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <p>Email: info@sjp.org</p>
+        <p>Phone: +91 XXX XXX XXXX</p>
+        <p>Address: Your City, State</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Sampoorna Janta Party. All rights reserved.</p>
+    </div>
+  </footer>
 
-  <p id="msg"></p>
-</section>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100
+    });
 
-<!-- Footer -->
-<footer>
-  <p>© 2026 Sampoorna Janta Party</p>
-</footer>
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    const navbar = document.getElementById('navbar');
 
-<script>
-function scrollToJoin() {
-  document.getElementById("join").scrollIntoView({ behavior: "smooth" });
-}
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
 
-function submitForm(e) {
-  e.preventDefault();
-  document.getElementById("msg").innerText = "Form Submitted!";
-}
-</script>
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    function scrollToContact() {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitForm(e) {
+      e.preventDefault();
+      const successMsg = document.getElementById('successMsg');
+      successMsg.style.display = 'block';
+      e.target.reset();
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 5000);
+    }
+  </script>
 
 </body>
 </html>
