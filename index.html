@@ -30,59 +30,72 @@
       overflow-x: hidden;
     }
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 8%;
-      background: rgba(10, 14, 39, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 106, 0, 0.1);
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    nav.scrolled {
-      padding: 15px 8%;
-      background: rgba(10, 14, 39, 0.95);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-img {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 700;
-      color: white;
-      box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
-    }
-
-    .logo h1 {
-      font-size: 24px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
-    }
-
+    
     .nav-links {
       display: flex;
       gap: 40px;
-      list-style: none;
+      lisnav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 8%;
+  background: rgba(10, 14, 39, 0.75);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 106, 0, 0.15);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Scroll effect */
+nav.scrolled {
+  padding: 12px 8%;
+  background: rgba(10, 14, 39, 0.95);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo container */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+}
+
+/* Logo image */
+.logo-img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 14px;
+  padding: 4px;
+  background: linear-gradient(135deg, #ff6a00, #ffb347);
+  box-shadow: 0 6px 18px rgba(255, 106, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* Hover animation */
+.logo:hover .logo-img {
+  transform: scale(1.08) rotate(3deg);
+  box-shadow: 0 8px 25px rgba(255, 106, 0, 0.6);
+}
+
+/* Title */
+.logo h1 {
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6a00, #ffb347);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: 0.3s;
+}
+
+/* Title hover effect */
+.logo:hover h1 {
+  letter-spacing: 1px;
+}t-style: none;
     }
 
     .nav-links a {
@@ -622,11 +635,13 @@
 </head>
 <body>
 
-  <nav id="navbar">
+  <nav id="navbar"> 
     <div class="logo">
-      <div class="logo-img">SJP</div>
-      <h1>Sampoorna Janta Party</h1>
-    </div>
+      <img
+        src="https://i.ibb.co/4RVmcFjm/LS20260318111915.png" class="logo-img" />
+<h1>Sampoorna Janta Party</h1>
+</div>
+  </nav>
     <ul class="nav-links" id="navLinks">
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
@@ -832,6 +847,10 @@
         successMsg.style.display = 'none';
       }, 5000);
     }
+    window.addEventListener("scroll", function () {
+  const nav = document.getElementById("navbar");
+  nav.classList.toggle("scrolled", window.scrollY > 50);
+});
   </script>
 
 </body>
