@@ -61,95 +61,160 @@ body {
 /* Section */
 #leaders {
   padding: 80px 20px;
+body {
+  background: #0b0f1a;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+/* Section */
+#leaders {
+  padding: 80px 20px;
+  text-align: center;
+  color: white;
+}
+
+#leaders h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+
+/* Layout */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Banner Card */
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.03);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  transition: 0.5s ease;
+}
+
+/* Glow Border */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: 20px;
+  background: linear-gradient(120deg, #ff6a00, #ffb347, #ff6a00);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+}
+
+/* Image Section */
+.card-img {
+  width: 50%;
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.6s ease;
+}
+
+/* Gradient Overlay */
+.card-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+}
+
+/* Hover Zoom */
+.card:hover img {
+  transform: scale(1.1);
+}
+
+/* Content */
+.card-content {
+  width: 50%;
+  padding: 30px;
+  text-align: left;
+}
+
+/* Name */
+.card-content h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #ff6a00, #ffb347);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+  transform: translateX(-30px);
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+/* Position */
+.card-content p {
+  font-size: 1rem;
+  color: #cbd5e1;
+  transform: translateX(-30px);
+  opacity: 0;
+  transition: 0.5s ease 0.2s;
+}
+
+/* Slide animation */
+.card:hover h3,
+.card:hover p {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Light streak */
+.card::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+  top: 0;
+  left: -100%;
+  transition: 0.6s;
+}
+
+.card:hover::after {
+  left: 100%;
+}
+
+/* 3D Tilt */
+.card:hover {
+  transform: rotateY(5deg) scale(1.02);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  .card {
+    flex-direction: column;
+  }
+  .card-img, .card-content {
+    width: 100%;
+  }
+  .card-img {
+    height: 200px;
+  }
+}
   text-align: center;
 }
 
 #leaders h2 {
   font-size: 2.5rem;
   margin-bottom: 40px;
-  letter-spacing: 1px;
-}
-
-/* Cards Layout */
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-/* Card Style */
-.card {
-  width: 280px;
-  padding: 30px 20px;
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  transition: 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Glow border effect */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  padding: 2px;
-  background: linear-gradient(45deg, #ff6a00, #ffb347);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
-/* Hover animation */
-.card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 15px 40px rgba(255, 165, 0, 0.3);
-}
-
-/* Profile Image */
-.profile-img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  margin: auto;
-  margin-bottom: 20px;
-  overflow: hidden;
-  border: 3px solid rgba(255,255,255,0.2);
-}
-
-.profile-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Name */
-.card h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-/* Position */
-.card p {
-  font-size: 0.95rem;
-  color: #cbd5e1;
-}
-
-/* Decorative line */
-.card::after {
-  content: "";
-  width: 50px;
-  height: 3px;
-  background: linear-gradient(to right, #ff6a00, #ffb347);
-  display: block;
-  margin: 15px auto 0;
-  border-radius: 10px;
-}
 
 
     /* Hero */
@@ -257,30 +322,38 @@ body {
 
   <div class="cards">
 
+    <!-- Card 1 -->
     <div class="card">
-      <div class="profile-img">
-        <img src="https://i.ibb.co/V0BN5K5M/IMG-20260318-WA0001.jpg" alt="Raviranjan">
+      <div class="card-img">
+        <img src="https://i.ibb.co/V0BN5K5M/IMG-20260318-WA0001.jpg">
       </div>
-      <h3>Raviranjan Jha</h3>
-      <p>National President</p>
+      <div class="card-content">
+        <h3>Raviranjan Jha</h3>
+        <p>National President</p>
+      </div>
     </div>
 
+    <!-- Card 2 -->
     <div class="card">
-      <div class="profile-img">
-        <img src="https://i.ibb.co/xK4H2gdw/IMG-20251104-113247.jpg" alt="Atul">
+      <div class="card-img">
+        <img src="https://i.ibb.co/xK4H2gdw/IMG-20251104-113247.jpg">
       </div>
-      <h3>Atul Mishra</h3>
-      <p>Vice President</p>
+      <div class="card-content">
+        <h3>Atul Mishra</h3>
+        <p>Vice President</p>
+      </div>
     </div>
 
+    <!-- Card 3 -->
     <div class="card">
-      <div class="profile-img">
-        <img src="https://i.ibb.co/7x5W7RFJ/IMG-20260318-WA0003.jpg" alt="Pranav">
+      <div class="card-img">
+        <img src="https://i.ibb.co/7x5W7RFJ/IMG-20260318-WA0003.jpg">
       </div>
-      <h3>Pranav Patel</h3>
-      <p>General Secretary</p>
+      <div class="card-content">
+        <h3>Pranav Patel</h3>
+        <p>General Secretary</p>
+      </div>
     </div>
-
   </div>
 </section>
 
