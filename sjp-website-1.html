@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Sampoorna Janta Party - Voice of Every Citizen. A modern political party committed to education, employment, and development for all."/>
+<meta name="keywords" content="Sampoorna Janta Party, SJP, political party, India, democracy, development"/>
+<title>Sampoorna Janta Party (SJP) – Voice of Every Citizen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // ⚠️ REPLACE WITH YOUR OWN FIREBASE CONFIG
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window._db = db;
+  window._collection = collection;
+  window._addDoc = addDoc;
+  window._serverTimestamp = serverTimestamp;
+  window._firebaseReady = true;
+</script>
+
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --saffron: #FF6B1A;
+  --saffron-light: #FF8C42;
+  --saffron-dark: #E05000;
+  --green: #138808;
+  --green-light: #1da60e;
+  --navy: #0A1628;
+  --navy-mid: #112240;
+  --white: #FFFFFF;
+  --off-white: #F8F9FA;
+  --cream: #FFF8F3;
+  --text-dark: #1A1A2E;
+  --text-mid: #4A4A6A;
+  --text-light: #8888AA;
+  --glass-bg: rgba(255,255,255,0.12);
+  --glass-border: rgba(255,255,255,0.25);
+  --shadow-soft: 0 8px 32px rgba(10,22,40,0.12);
+  --shadow-card: 0 20px 60px rgba(10,22,40,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-dark);
+  background: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+
+/* ===== LOADING SCREEN ===== */
+#loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 20px;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+.loader-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900;
+  color: var(--white); letter-spacing: 2px;
+}
+.loader-logo span { color: var(--saffron); }
+.loader-bar {
+  width: 200px; height: 3px;
+  background: rgba(255,255,255,0.15); border-radius: 99px; overflow: hidden;
+}
+.loader-fill {
+  height: 100%; width: 0%; background: linear-gradient(90deg, var(--saffron), var(--green));
+  border-radius: 99px; animation: loadFill 1.8s ease forwards;
+}
+@keyframes loadFill { to { width: 100%; } }
+
+/* ===== NAVBAR ===== */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 18px 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: var(--transition);
+}
+#navbar.scrolled {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 2px 30px rgba(10,22,40,0.1);
+  padding: 12px 5%;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-emblem {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--saffron), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: white; font-weight: 900;
+  box-shadow: 0 4px 15px rgba(255,107,26,0.4);
+  flex-shrink: 0;
+}
+.nav-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); line-height: 1.1; }
+.nav-name span { display: block; font-size: 0.7rem; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--text-mid); letter-spacing: 2px; text-transform: uppercase; }
+.nav-links {
+  display: flex; align-items: center; gap: 36px;
+}
+.nav-links a {
+  font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.9);
+  letter-spacing: 0.5px; transition: var(--transition); position: relative;
+}
+#navbar.scrolled .nav-links a { color: var(--text-dark); }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--saffron); border-radius: 2px;
+  transform: scaleX(0); transition: var(--transition);
+}
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-links a:hover { color: var(--saffron); }
+.nav-cta {
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  color: white !important; padding: 10px 22px; border-radius: 50px;
+  font-weight: 600 !important; box-shadow: 0 4px 15px rgba(255,107,26,0.4);
+  transition: var(--transition);
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,107,26,0.5); }
+.burger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  padding: 6px; z-index: 1100;
+}
+.burger span {
+  display: block; width: 26px; height: 2px;
+  background: white; border-radius: 2px; transition: var(--transition);
+}
+#navbar.scrolled .burger span { background: var(--navy); }
+.burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed; top: 0; right: -100%; width: 300px; height: 100vh;
+  background: var(--navy);
+  padding: 100px 40px 40px;
+  z-index: 1050; transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.mobile-menu.open { right: 0; box-shadow: -10px 0 60px rgba(0,0,0,0.4); }
+.mobile-menu a {
+  color: rgba(255,255,255,0.8); font-size: 1.1rem; font-weight: 500;
+  padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: var(--transition); display: block;
+}
+.mobile-menu a:hover { color: var(--saffron); padding-left: 8px; }
+.mobile-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 1040; opacity: 0; visibility: hidden; transition: var(--transition);
+}
+.mobile-overlay.active { opacity: 1; visibility: visible; }
+
+/* ===== HERO SECTION ===== */
+#hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--navy) 0%, #0d1f3c 40%, #162a4a 70%, #1a1a2e 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; padding: 120px 5% 80px;
+}
+.hero-bg-shapes {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.hero-shape {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,26,0.15), transparent 70%);
+}
+.hero-shape-1 { width: 600px; height: 600px; top: -200px; right: -100px; }
+.hero-shape-2 { width: 400px; height: 400px; bottom: -150px; left: -100px; background: radial-gradient(circle, rgba(19,136,8,0.12), transparent 70%); }
+.hero-shape-3 { width: 300px; height: 300px; top: 30%; left: 20%; background: radial-gradient(circle, rgba(255,107,26,0.08), transparent 70%); }
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content {
+  max-width: 760px; text-align: center; position: relative; z-index: 2;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px); padding: 8px 20px; border-radius: 50px;
+  font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.8); margin-bottom: 28px;
+  animation: fadeDown 0.8s ease 0.3s both;
+}
+.hero-badge i { color: var(--saffron); }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900; line-height: 1.08;
+  color: var(--white); margin-bottom: 12px;
+  animation: fadeUp 0.8s ease 0.5s both;
+}
+.hero-title .accent { color: var(--saffron); }
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: rgba(255,255,255,0.7); margin-bottom: 20px;
+  font-weight: 300; letter-spacing: 1px;
+  animation: fadeUp 0.8s ease 0.7s both;
+}
+.hero-tagline {
+  display: inline-block; font-size: 1rem; color: rgba(255,255,255,0.5);
+  margin-bottom: 48px; font-style: italic;
+  animation: fadeUp 0.8s ease 0.9s both;
+}
+.hero-btns {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.8s ease 1.1s both;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  color: white; padding: 16px 36px; border-radius: 50px;
+  font-weight: 600; font-size: 1rem; letter-spacing: 0.5px;
+  box-shadow: 0 8px 30px rgba(255,107,26,0.45);
+  transition: var(--transition); display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255,107,26,0.6); }
+.btn-secondary {
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px); color: white;
+  padding: 16px 36px; border-radius: 50px;
+  font-weight: 500; font-size: 1rem;
+  transition: var(--transition); display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); }
+.hero-stats {
+  display: flex; justify-content: center; gap: 48px; margin-top: 72px;
+  animation: fadeUp 0.8s ease 1.3s both;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 900; color: var(--saffron);
+}
+.hero-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+.hero-scroll {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 2px;
+  text-transform: uppercase; animation: bounce 2s infinite;
+}
+.hero-scroll i { font-size: 1.1rem; }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+/* ===== SECTION BASE ===== */
+section { padding: 100px 5%; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--saffron); margin-bottom: 16px;
+}
+.section-label::before, .section-label::after {
+  content: ''; width: 30px; height: 1px; background: var(--saffron);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
+  color: var(--navy); line-height: 1.15; margin-bottom: 16px;
+}
+.section-desc { font-size: 1.05rem; color: var(--text-mid); max-width: 580px; line-height: 1.8; }
+.text-center { text-align: center; }
+.text-center .section-desc { margin: 0 auto; }
+.text-center .section-label { justify-content: center; }
+
+/* ===== ABOUT SECTION ===== */
+#about { background: var(--cream); }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  margin-top: 60px;
+}
+.about-image-stack { position: relative; }
+.about-img-main {
+  width: 100%; border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.about-img-main img { width: 100%; height: 420px; object-fit: cover; }
+.about-img-accent {
+  position: absolute; bottom: -30px; right: -30px;
+  width: 180px; border-radius: var(--radius-sm); overflow: hidden;
+  box-shadow: var(--shadow-card); border: 4px solid white;
+}
+.about-img-accent img { width: 100%; height: 140px; object-fit: cover; }
+.about-flag-stripe {
+  position: absolute; top: 24px; left: -16px;
+  width: 6px; height: 120px; border-radius: 3px;
+  background: linear-gradient(180deg, var(--saffron) 33%, white 33% 66%, var(--green) 66%);
+}
+.about-text { display: flex; flex-direction: column; gap: 28px; }
+.about-intro { font-size: 1.05rem; color: var(--text-mid); line-height: 1.9; }
+.about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.about-card {
+  background: white; border-radius: var(--radius-sm); padding: 24px;
+  box-shadow: var(--shadow-soft); border-left: 3px solid var(--saffron);
+  transition: var(--transition);
+}
+.about-card:nth-child(2) { border-left-color: var(--green); }
+.about-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); }
+.about-card-icon { font-size: 1.4rem; margin-bottom: 10px; }
+.about-card-title { font-weight: 700; color: var(--navy); margin-bottom: 6px; font-size: 0.95rem; }
+.about-card-text { font-size: 0.85rem; color: var(--text-mid); line-height: 1.7; }
+.values-list { display: flex; flex-direction: column; gap: 12px; }
+.value-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.92rem; color: var(--text-mid); font-weight: 500;
+}
+.value-icon {
+  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(255,107,26,0.1), rgba(255,107,26,0.2));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--saffron); font-size: 0.85rem;
+}
+
+/* ===== LEADERSHIP SECTION ===== */
+#leadership { background: var(--white); }
+.leaders-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px; margin-top: 60px;
+}
+.leader-card {
+  background: white; border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-soft); transition: var(--transition);
+  border: 1px solid rgba(0,0,0,0.06); position: relative;
+}
+.leader-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--saffron), var(--green));
+  opacity: 0; transition: var(--transition); z-index: 0;
+}
+.leader-card:hover { transform: translateY(-8px); box-shadow: 0 30px 70px rgba(10,22,40,0.18); }
+.leader-card:hover::before { opacity: 0.03; }
+.leader-img {
+  width: 100%; height: 260px; overflow: hidden; position: relative;
+}
+.leader-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.leader-card:hover .leader-img img { transform: scale(1.08); }
+.leader-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,22,40,0.5), transparent 60%);
+}
+.leader-body { padding: 22px; position: relative; }
+.leader-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.leader-pos { font-size: 0.8rem; color: var(--saffron); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px; }
+.leader-bio { font-size: 0.85rem; color: var(--text-mid); line-height: 1.7; }
+.leader-social { display: flex; gap: 10px; margin-top: 14px; }
+.leader-social a {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--off-white); display: flex; align-items: center; justify-content: center;
+  color: var(--text-mid); font-size: 0.8rem; transition: var(--transition);
+}
+.leader-social a:hover { background: var(--saffron); color: white; transform: scale(1.1); }
+
+/* ===== MANIFESTO SECTION ===== */
+#manifesto { background: var(--navy); position: relative; overflow: hidden; }
+#manifesto::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(255,107,26,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(19,136,8,0.06) 0%, transparent 50%);
+}
+#manifesto .section-title { color: white; }
+#manifesto .section-desc { color: rgba(255,255,255,0.6); }
+#manifesto .section-label { color: var(--saffron-light); }
+#manifesto .section-label::before, #manifesto .section-label::after { background: var(--saffron-light); }
+.agenda-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px; margin-top: 60px;
+}
+.agenda-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px); border-radius: var(--radius);
+  padding: 32px 24px; transition: var(--transition); position: relative; overflow: hidden;
+}
+.agenda-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--saffron), var(--green));
+  transform: scaleX(0); transition: var(--transition); transform-origin: left;
+}
+.agenda-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-6px); border-color: rgba(255,107,26,0.3); }
+.agenda-card:hover::after { transform: scaleX(1); }
+.agenda-icon {
+  width: 52px; height: 52px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255,107,26,0.2), rgba(255,107,26,0.1));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: var(--saffron); margin-bottom: 20px;
+}
+.agenda-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: white; margin-bottom: 10px; font-weight: 700; }
+.agenda-text { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.8; }
+.agenda-points { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.agenda-point { font-size: 0.8rem; color: rgba(255,255,255,0.5); display: flex; align-items: flex-start; gap: 8px; }
+.agenda-point::before { content: '→'; color: var(--saffron); flex-shrink: 0; margin-top: 1px; }
+
+/* ===== JOIN US SECTION ===== */
+#join { background: var(--cream); }
+.join-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; margin-top: 60px; }
+.join-info { display: flex; flex-direction: column; gap: 28px; }
+.join-feature {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.join-feature-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1rem; box-shadow: 0 6px 20px rgba(255,107,26,0.3);
+}
+.join-feature-title { font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.join-feature-text { font-size: 0.875rem; color: var(--text-mid); line-height: 1.7; }
+.join-form {
+  background: white; border-radius: var(--radius);
+  padding: 40px; box-shadow: var(--shadow-card);
+}
+.form-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy); margin-bottom: 6px; font-weight: 700; }
+.form-subtitle { font-size: 0.875rem; color: var(--text-mid); margin-bottom: 28px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.form-group label { font-size: 0.8rem; font-weight: 600; color: var(--navy); letter-spacing: 0.5px; }
+.form-group input, .form-group textarea, .form-group select {
+  padding: 12px 16px; border: 1.5px solid #E8E8F0; border-radius: var(--radius-sm);
+  font-size: 0.9rem; color: var(--text-dark); background: var(--off-white);
+  transition: var(--transition); outline: none;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  border-color: var(--saffron); background: white;
+  box-shadow: 0 0 0 4px rgba(255,107,26,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-group.full { grid-column: 1 / -1; }
+.btn-submit {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  color: white; font-size: 1rem; font-weight: 600; letter-spacing: 0.5px;
+  transition: var(--transition); box-shadow: 0 6px 20px rgba(255,107,26,0.35);
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,26,0.5); }
+.form-success {
+  display: none; text-align: center; padding: 24px;
+  color: var(--green); font-weight: 600; font-size: 1.05rem;
+}
+.form-success i { font-size: 2rem; display: block; margin-bottom: 12px; }
+
+/* ===== DONATION SECTION ===== */
+#donate {
+  background: linear-gradient(135deg, var(--saffron) 0%, #FF8C42 50%, var(--saffron-dark) 100%);
+  position: relative; overflow: hidden;
+}
+#donate::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.donate-content { position: relative; z-index: 1; text-align: center; max-width: 700px; margin: 0 auto; }
+#donate .section-title { color: white; font-size: clamp(2rem, 4vw, 3rem); }
+#donate .section-label { color: rgba(255,255,255,0.7); }
+#donate .section-label::before, #donate .section-label::after { background: rgba(255,255,255,0.7); }
+.donate-desc { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.8; margin: 20px auto 40px; max-width: 500px; }
+.donate-amounts { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+.donate-amount {
+  background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4);
+  color: white; padding: 12px 24px; border-radius: 50px;
+  font-size: 1rem; font-weight: 700; cursor: pointer; transition: var(--transition);
+}
+.donate-amount:hover, .donate-amount.active {
+  background: white; color: var(--saffron); border-color: white;
+  transform: scale(1.05);
+}
+.donate-custom {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;
+}
+.donate-custom input {
+  padding: 12px 20px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.15); color: white; font-size: 1rem;
+  width: 180px; outline: none; backdrop-filter: blur(8px);
+}
+.donate-custom input::placeholder { color: rgba(255,255,255,0.6); }
+.donate-custom input:focus { border-color: white; background: rgba(255,255,255,0.25); }
+.btn-donate {
+  background: white; color: var(--saffron); padding: 16px 48px; border-radius: 50px;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: 0.5px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: var(--transition);
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-donate:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+.donate-trust { display: flex; justify-content: center; gap: 28px; margin-top: 28px; flex-wrap: wrap; }
+.donate-trust-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.75); font-size: 0.85rem; }
+.donate-trust-item i { font-size: 1rem; }
+
+/* ===== NEWS SECTION ===== */
+#news { background: var(--off-white); }
+.news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 60px; }
+.news-card {
+  background: white; border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-soft); transition: var(--transition);
+}
+.news-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-card); }
+.news-img { width: 100%; height: 200px; overflow: hidden; position: relative; }
+.news-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.news-card:hover .news-img img { transform: scale(1.05); }
+.news-category {
+  position: absolute; top: 16px; left: 16px;
+  background: var(--saffron); color: white; padding: 4px 12px; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+}
+.news-body { padding: 24px; }
+.news-date { font-size: 0.78rem; color: var(--text-light); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.news-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); line-height: 1.4; margin-bottom: 10px; }
+.news-excerpt { font-size: 0.875rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 16px; }
+.news-read-more { font-size: 0.85rem; font-weight: 600; color: var(--saffron); display: inline-flex; align-items: center; gap: 6px; transition: var(--transition); }
+.news-read-more:hover { gap: 10px; }
+
+/* ===== GALLERY SECTION ===== */
+#gallery { background: var(--white); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  gap: 12px; margin-top: 60px;
+}
+.gallery-item {
+  border-radius: var(--radius-sm); overflow: hidden;
+  position: relative; cursor: pointer;
+}
+.gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.gallery-item:nth-child(4) { grid-column: span 2; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; min-height: 180px; transition: transform 0.5s ease; }
+.gallery-item:hover img { transform: scale(1.08); }
+.gallery-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,107,26,0.8), rgba(10,22,40,0.6));
+  opacity: 0; transition: var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-overlay i { font-size: 2rem; color: white; }
+
+/* ===== SOCIAL SECTION ===== */
+#social { background: var(--cream); }
+.social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 60px; }
+.social-card {
+  background: white; border-radius: var(--radius); padding: 36px 24px;
+  text-align: center; box-shadow: var(--shadow-soft); transition: var(--transition);
+  border-top: 4px solid transparent;
+}
+.social-card.instagram:hover { border-top-color: #E1306C; }
+.social-card.facebook:hover { border-top-color: #1877F2; }
+.social-card.twitter:hover { border-top-color: #1DA1F2; }
+.social-card.youtube:hover { border-top-color: #FF0000; }
+.social-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-card); }
+.social-icon { font-size: 2.4rem; margin-bottom: 14px; }
+.social-card.instagram .social-icon { color: #E1306C; }
+.social-card.facebook .social-icon { color: #1877F2; }
+.social-card.twitter .social-icon { color: #1DA1F2; }
+.social-card.youtube .social-icon { color: #FF0000; }
+.social-platform { font-weight: 700; color: var(--navy); margin-bottom: 4px; font-size: 1rem; }
+.social-handle { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 16px; }
+.social-follow {
+  display: inline-block; padding: 8px 20px; border-radius: 50px;
+  font-size: 0.8rem; font-weight: 600; border: 2px solid currentColor;
+  transition: var(--transition);
+}
+.social-card.instagram .social-follow { color: #E1306C; }
+.social-card.facebook .social-follow { color: #1877F2; }
+.social-card.twitter .social-follow { color: #1DA1F2; }
+.social-card.youtube .social-follow { color: #FF0000; }
+.social-card:hover .social-follow { background: currentColor; color: white; }
+
+/* ===== CONTACT SECTION ===== */
+#contact { background: var(--white); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; margin-top: 60px; }
+.contact-info { display: flex; flex-direction: column; gap: 24px; }
+.contact-item { display: flex; gap: 18px; align-items: flex-start; }
+.contact-item-icon {
+  width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(255,107,26,0.1), rgba(255,107,26,0.2));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--saffron); font-size: 1.1rem;
+}
+.contact-item-title { font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.contact-item-text { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; }
+.contact-form {
+  background: white; border-radius: var(--radius);
+  padding: 40px; box-shadow: var(--shadow-card); border: 1px solid #F0F0F8;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--navy); padding: 60px 5% 30px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand { display: flex; flex-direction: column; gap: 16px; }
+.footer-logo { display: flex; align-items: center; gap: 12px; }
+.footer-logo-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--saffron), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.1rem; font-weight: 900;
+}
+.footer-logo-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: white; }
+.footer-brand-text { font-size: 0.875rem; color: rgba(255,255,255,0.45); line-height: 1.8; }
+.footer-col-title { font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+.footer-col a { display: block; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 10px; transition: var(--transition); }
+.footer-col a:hover { color: var(--saffron); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
+}
+.footer-bottom-text { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+.footer-flag {
+  display: flex; gap: 0; border-radius: 4px; overflow: hidden; height: 20px; width: 36px;
+}
+.flag-s, .flag-w, .flag-g { flex: 1; }
+.flag-s { background: var(--saffron); }
+.flag-w { background: white; }
+.flag-g { background: var(--green); }
+
+/* ===== SCROLL REVEAL ANIMATIONS ===== */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== TRICOLOR STRIPE ===== */
+.tricolor-stripe {
+  height: 5px;
+  background: linear-gradient(90deg, var(--saffron) 33%, white 33% 66%, var(--green) 66%);
+}
+
+/* ===== BACK TO TOP ===== */
+#back-top {
+  position: fixed; bottom: 32px; right: 32px; z-index: 800;
+  width: 46px; height: 46px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+  color: white; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; box-shadow: 0 6px 20px rgba(255,107,26,0.4);
+  transition: var(--transition); opacity: 0; visibility: hidden; cursor: pointer;
+}
+#back-top.visible { opacity: 1; visibility: visible; }
+#back-top:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(255,107,26,0.5); }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(60px);
+  background: var(--navy); color: white; padding: 14px 28px; border-radius: 50px;
+  font-size: 0.9rem; font-weight: 500; z-index: 9000;
+  transition: transform 0.4s ease, opacity 0.4s ease; opacity: 0;
+  display: flex; align-items: center; gap: 10px; white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast i { color: var(--green); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr; gap: 50px; }
+  .about-image-stack { max-width: 500px; }
+  .join-grid { grid-template-columns: 1fr; gap: 48px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .gallery-item:nth-child(1) { grid-column: span 2; }
+  .gallery-item:nth-child(4) { grid-column: span 1; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .burger { display: flex; }
+  section { padding: 70px 5%; }
+  .hero-stats { gap: 28px; flex-wrap: wrap; }
+  .form-row { grid-template-columns: 1fr; }
+  .leaders-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .agenda-grid { grid-template-columns: 1fr; }
+  .about-cards { grid-template-columns: 1fr; }
+  .donate-amounts { gap: 8px; }
+}
+@media (max-width: 480px) {
+  .leaders-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-item:nth-child(1) { grid-column: span 1; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 300px; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">SJP<span>.</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- TRICOLOR STRIPE -->
+<div class="tricolor-stripe"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-brand">
+    <div class="nav-emblem">🇮🇳</div>
+    <div class="nav-name">
+      Sampoorna Janta Party
+      <span>SJP • Founded 2024</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#leadership">Leaders</a></li>
+    <li><a href="#manifesto">Manifesto</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#join" class="nav-cta">Join Us</a></li>
+  </ul>
+  <div class="burger" id="burger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About Us</a>
+  <a href="#leadership" onclick="closeMenu()">Leadership</a>
+  <a href="#manifesto" onclick="closeMenu()">Manifesto</a>
+  <a href="#news" onclick="closeMenu()">News</a>
+  <a href="#gallery" onclick="closeMenu()">Gallery</a>
+  <a href="#social" onclick="closeMenu()">Social Media</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#donate" onclick="closeMenu()" style="color:var(--saffron);font-weight:700;">Donate Now</a>
+  <a href="#join" onclick="closeMenu()" style="color:var(--green);font-weight:700;">Join Us</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HERO SECTION                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="hero-shape hero-shape-3"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-star"></i>Sampoorna Janta Party &nbsp;•&nbsp; Est. 2024</div>
+    <h1 class="hero-title">Voice of Every <span class="accent">Citizen</span></h1>
+    <p class="hero-subtitle">Sabka Saath, Sabka Vikas, Sabka Vishwas</p>
+    <p class="hero-tagline">"एक मजबूत राष्ट्र, एक समृद्ध जनता" — A Stronger Nation, A Prosperous People</p>
+    <div class="hero-btns">
+      <a href="#join" class="btn-primary"><i class="fas fa-user-plus"></i> Join Us</a>
+      <a href="#donate" class="btn-secondary"><i class="fas fa-heart"></i> Donate</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num" data-target="50">0</div>
+        <div class="hero-stat-label">Lakh+ Members</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" data-target="28">0</div>
+        <div class="hero-stat-label">States Active</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" data-target="500">0</div>
+        <div class="hero-stat-label">Districts</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" data-target="12">0</div>
+        <div class="hero-stat-label">Years Vision</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><i class="fas fa-chevron-down"></i></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ABOUT SECTION                                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-image-stack reveal-left">
+      <div class="about-flag-stripe"></div>
+      <div class="about-img-main">
+        <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&q=80" alt="People Unity"/>
+      </div>
+      <div class="about-img-accent">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&q=80" alt="Party Gathering"/>
+      </div>
+    </div>
+    <div class="about-text reveal-right">
+      <div class="section-label">About SJP</div>
+      <h2 class="section-title">Built by the People, <br/>For the People</h2>
+      <p class="about-intro">Sampoorna Janta Party (SJP) was founded with a singular, unshakeable belief — that every citizen of this great nation deserves equal opportunity, justice, and dignity. We are not a party of promises. We are a movement of action.</p>
+      <div class="about-cards">
+        <div class="about-card">
+          <div class="about-card-icon">🎯</div>
+          <div class="about-card-title">Our Vision</div>
+          <div class="about-card-text">A self-reliant, prosperous, and inclusive India where no citizen is left behind in the journey of development.</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">💡</div>
+          <div class="about-card-title">Our Mission</div>
+          <div class="about-card-text">To create policy-driven governance focused on education, employment, healthcare, and environmental sustainability.</div>
+        </div>
+      </div>
+      <div class="values-list">
+        <div class="value-item"><div class="value-icon"><i class="fas fa-balance-scale"></i></div>Justice & Equality for every citizen</div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-hands-helping"></i></div>Transparent and Accountable Governance</div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-leaf"></i></div>Sustainable Development & Environment Protection</div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-flag"></i></div>National Pride with Constitutional Values</div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-users"></i></div>Inclusive Growth — No One Left Behind</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LEADERSHIP SECTION                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="leadership">
+  <div class="text-center reveal">
+    <div class="section-label">Our Leaders</div>
+    <h2 class="section-title">Trusted Faces, <br/>Proven Leadership</h2>
+    <p class="section-desc">Meet the dedicated individuals who guide Sampoorna Janta Party with integrity, vision, and an unwavering commitment to the nation.</p>
+  </div>
+  <div class="leaders-grid">
+    <div class="leader-card reveal" style="transition-delay:0.1s">
+      <div class="leader-img">
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" alt="Rajesh Kumar Sharma"/>
+        <div class="leader-img-overlay"></div>
+      </div>
+      <div class="leader-body">
+        <div class="leader-name">Shri Rajesh Kumar Sharma</div>
+        <div class="leader-pos">National President</div>
+        <div class="leader-bio">A visionary leader with 25+ years in public service. Former IAS officer committed to grassroots development and democratic values.</div>
+        <div class="leader-social">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="leader-card reveal" style="transition-delay:0.2s">
+      <div class="leader-img">
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80" alt="Dr. Priya Nair"/>
+        <div class="leader-img-overlay"></div>
+      </div>
+      <div class="leader-body">
+        <div class="leader-name">Dr. Priya Nair</div>
+        <div class="leader-pos">National General Secretary</div>
+        <div class="leader-bio">Economist & social activist with expertise in rural development policy and women empowerment initiatives across 12 states.</div>
+        <div class="leader-social">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="leader-card reveal" style="transition-delay:0.3s">
+      <div class="leader-img">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Arvind Mehta"/>
+        <div class="leader-img-overlay"></div>
+      </div>
+      <div class="leader-body">
+        <div class="leader-name">Shri Arvind Mehta</div>
+        <div class="leader-pos">National Treasurer</div>
+        <div class="leader-bio">Chartered Accountant and philanthropist ensuring financial transparency, accountability and responsible management of party funds.</div>
+        <div class="leader-social">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="leader-card reveal" style="transition-delay:0.4s">
+      <div class="leader-img">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80" alt="Sunita Devi"/>
+        <div class="leader-img-overlay"></div>
+      </div>
+      <div class="leader-body">
+        <div class="leader-name">Smt. Sunita Devi</div>
+        <div class="leader-pos">Women's Wing President</div>
+        <div class="leader-bio">Grassroots champion who has empowered over 200,000 women through self-help groups, microfinance, and skill development programs.</div>
+        <div class="leader-social">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MANIFESTO / AGENDA SECTION                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="manifesto">
+  <div class="text-center reveal" style="position:relative;z-index:1">
+    <div class="section-label">Our Manifesto</div>
+    <h2 class="section-title">A Clear Agenda for <br/>A Better India</h2>
+    <p class="section-desc" style="color:rgba(255,255,255,0.6)">Our seven-pillar agenda is rooted in ground realities and guided by the aspiration of every Indian citizen.</p>
+  </div>
+  <div class="agenda-grid" style="position:relative;z-index:1">
+    <div class="agenda-card reveal" style="transition-delay:0.05s">
+      <div class="agenda-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="agenda-title">Education for All</div>
+      <div class="agenda-text">Quality education as a fundamental right, not a privilege.</div>
+      <div class="agenda-points">
+        <div class="agenda-point">Free education till class 12 for all</div>
+        <div class="agenda-point">Skill development centers in every district</div>
+        <div class="agenda-point">Digital classrooms in rural schools</div>
+      </div>
+    </div>
+    <div class="agenda-card reveal" style="transition-delay:0.1s">
+      <div class="agenda-icon"><i class="fas fa-briefcase"></i></div>
+      <div class="agenda-title">Employment</div>
+      <div class="agenda-text">Creating 2 crore dignified jobs in 5 years.</div>
+      <div class="agenda-points">
+        <div class="agenda-point">MSME support and startup fund</div>
+        <div class="agenda-point">Government job drive in rural areas</div>
+        <div class="agenda-point">Apprenticeship with top industries</div>
+      </div>
+    </div>
+    <div class="agenda-card reveal" style="transition-delay:0.15s">
+      <div class="agenda-icon"><i class="fas fa-hospital"></i></div>
+      <div class="agenda-title">Healthcare</div>
+      <div class="agenda-text">Universal healthcare — no family left without care.</div>
+      <div class="agenda-points">
+        <div class="agenda-point">Free treatment for BPL families</div>
+        <div class="agenda-point">Primary health centers in all villages</div>
+        <div class="agenda-point">Affordable medicines policy</div>
+      </div>
+    </div>
+    <div class="agenda-card reveal" style="transition-delay:0.2s">
+      <div class="agenda-icon"><i class="fas fa-road"></i></div>
+      <div class="agenda-title">Infrastructure</div>
+      <div class="agenda-text">Modern infrastructure connecting every corner of India.</div>
+      <div class="agenda-points">
+        <div class="agenda-point">Roads, bridges and smart cities</div>
+        <div class="agenda-point">High-speed internet in rural areas</div>
+        <div class="agenda-point">Clean drinking water for all homes</div>
+      </div>
+    </div>
+    <div class="agenda-card reveal" style="transition-delay:0.25s">
+      <div class="agenda-icon"><i class="fas fa-seedling"></i></div>
+      <div class="agenda-title">Agriculture</div>
+      <div class="agenda-text">Doubling farmer income through modern, fair agriculture.</div>
+      <div class="agenda-points">
+        <div class="agenda-point">MSP guarantee for all crops</div>
+        <div class="agenda-point">Crop insurance reform</div>
+        <div class="agenda-point">Irrigation in every district</div>
+      </div>
+    </div>
+    <div class="agenda-card reveal" style="transition-delay:0.3s">
+      <div class="agenda-icon"><i class="fas fa-female"></i></div>
+      <div class="agenda-title">Women Empowerment</div>
+      <div class="agenda-text">Ensuring safety, opportunity, and leadership for women.</div>
+      <div class="agenda-points">
+        <div class="agenda-point">33% reservation in legislatures</div>
+        <div class="agenda-point">Zero tolerance for gender crime</div>
+        <div class="agenda-point">Women entrepreneur fund</div>
+      </div>
+    </div>
+    <div class="agenda-card reveal" style="transition-delay:0.35s">
+      <div class="agenda-icon"><i class="fas fa-solar-panel"></i></div>
+      <div class="agenda-title">Environment</div>
+      <div class="agenda-text">Green India — a legacy for future generations.</div>
+      <div class="agenda-points">
+        <div class="agenda-point">100% renewable energy by 2035</div>
+        <div class="agenda-point">Plant 10 crore trees program</div>
+        <div class="agenda-point">Clean river and air mission</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- JOIN US SECTION                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="join">
+  <div class="text-center reveal">
+    <div class="section-label">Join the Movement</div>
+    <h2 class="section-title">Be the Change <br/>India Needs</h2>
+    <p class="section-desc">Your voice matters. Join millions of citizens building a better India together.</p>
+  </div>
+  <div class="join-grid">
+    <div class="join-info">
+      <div class="join-feature reveal" style="transition-delay:0.1s">
+        <div class="join-feature-icon"><i class="fas fa-users"></i></div>
+        <div>
+          <div class="join-feature-title">Become a Primary Member</div>
+          <div class="join-feature-text">Gain voting rights in party elections, attend rallies, and directly influence policies that affect your community.</div>
+        </div>
+      </div>
+      <div class="join-feature reveal" style="transition-delay:0.2s">
+        <div class="join-feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div>
+          <div class="join-feature-title">Join Your Local Unit</div>
+          <div class="join-feature-text">Every district and constituency has an active SJP unit. Meet like-minded citizens and work for local change.</div>
+        </div>
+      </div>
+      <div class="join-feature reveal" style="transition-delay:0.3s">
+        <div class="join-feature-icon"><i class="fas fa-bullhorn"></i></div>
+        <div>
+          <div class="join-feature-title">Volunteer & Lead</div>
+          <div class="join-feature-text">Take on leadership roles, volunteer in outreach programs, and grow as a community champion for SJP.</div>
+        </div>
+      </div>
+      <div class="join-feature reveal" style="transition-delay:0.4s">
+        <div class="join-feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <div>
+          <div class="join-feature-title">Your Data is Safe</div>
+          <div class="join-feature-text">All information you share is encrypted, protected, and never shared with third parties. We respect your privacy.</div>
+        </div>
+      </div>
+    </div>
+    <div class="join-form reveal-right">
+      <div class="form-title">Membership Registration</div>
+      <div class="form-subtitle">Fill in your details to join the Sampoorna Janta Party</div>
+      <form id="joinForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="j_fname">First Name *</label>
+            <input type="text" id="j_fname" placeholder="Rahul" required/>
+          </div>
+          <div class="form-group">
+            <label for="j_lname">Last Name *</label>
+            <input type="text" id="j_lname" placeholder="Sharma" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="j_email">Email Address *</label>
+            <input type="email" id="j_email" placeholder="rahul@email.com" required/>
+          </div>
+          <div class="form-group">
+            <label for="j_phone">Phone Number *</label>
+            <input type="tel" id="j_phone" placeholder="+91 98765 43210" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="j_address">Full Address *</label>
+          <input type="text" id="j_address" placeholder="House No., Street, City" required/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="j_state">State *</label>
+            <select id="j_state" required>
+              <option value="">Select State</option>
+              <option>Uttar Pradesh</option><option>Maharashtra</option><option>Bihar</option>
+              <option>West Bengal</option><option>Madhya Pradesh</option><option>Rajasthan</option>
+              <option>Gujarat</option><option>Karnataka</option><option>Tamil Nadu</option>
+              <option>Andhra Pradesh</option><option>Delhi</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="j_role">Interested Role</label>
+            <select id="j_role">
+              <option value="">Choose Role</option>
+              <option>Primary Member</option><option>Active Volunteer</option>
+              <option>Local Unit Leader</option><option>Youth Wing</option><option>Women Wing</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label for="j_why">Why do you want to join? (Optional)</label>
+          <textarea id="j_why" placeholder="Share your motivation..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="joinBtn">
+          <span id="joinBtnText">Register as Member <i class="fas fa-arrow-right"></i></span>
+        </button>
+        <div class="form-success" id="joinSuccess">
+          <i class="fas fa-check-circle"></i>
+          Welcome to Sampoorna Janta Party! 🎉<br/>
+          <small style="color:var(--text-mid);font-weight:400;">You'll receive a confirmation email shortly.</small>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- DONATION SECTION                                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="donate">
+  <div class="donate-content reveal">
+    <div class="section-label">Support the Cause</div>
+    <h2 class="section-title">Fuel the Movement <br/>with Your Support</h2>
+    <p class="donate-desc">Every rupee donated strengthens grassroots democracy. Your contribution goes directly towards voter awareness, community programs, and national campaigns.</p>
+    <div class="donate-amounts">
+      <div class="donate-amount" onclick="setAmount(this, 100)">₹100</div>
+      <div class="donate-amount active" onclick="setAmount(this, 500)">₹500</div>
+      <div class="donate-amount" onclick="setAmount(this, 1000)">₹1,000</div>
+      <div class="donate-amount" onclick="setAmount(this, 5000)">₹5,000</div>
+    </div>
+    <div class="donate-custom">
+      <input type="number" id="customAmount" placeholder="Enter custom amount (₹)" min="1"/>
+    </div>
+    <button class="btn-donate" onclick="handleDonate()">
+      <i class="fas fa-heart"></i> Donate Securely
+    </button>
+    <div class="donate-trust">
+      <div class="donate-trust-item"><i class="fas fa-lock"></i> 100% Secure</div>
+      <div class="donate-trust-item"><i class="fas fa-file-invoice"></i> 80G Tax Exempt</div>
+      <div class="donate-trust-item"><i class="fas fa-check-shield"></i> ECI Registered</div>
+      <div class="donate-trust-item"><i class="fas fa-receipt"></i> Instant Receipt</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- NEWS SECTION                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="news">
+  <div class="text-center reveal">
+    <div class="section-label">Latest Updates</div>
+    <h2 class="section-title">News & Announcements</h2>
+    <p class="section-desc">Stay informed with the latest from Sampoorna Janta Party — rallies, policy updates, and community initiatives.</p>
+  </div>
+  <div class="news-grid">
+    <div class="news-card reveal" style="transition-delay:0.1s">
+      <div class="news-img">
+        <img src="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=500&q=80" alt="Rally"/>
+        <span class="news-category">Rally</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date"><i class="fas fa-calendar"></i> March 15, 2026</div>
+        <div class="news-title">SJP's Mega National Convention Draws 5 Lakh Supporters in Delhi</div>
+        <div class="news-excerpt">The historic New Delhi convention saw unprecedented support from all 28 states, uniting citizens under the banner of inclusive governance and development.</div>
+        <a href="#" class="news-read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="news-card reveal" style="transition-delay:0.2s">
+      <div class="news-img">
+        <img src="https://images.unsplash.com/photo-1491396023581-4344e51fec5f?w=500&q=80" alt="Policy"/>
+        <span class="news-category">Policy</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date"><i class="fas fa-calendar"></i> March 10, 2026</div>
+        <div class="news-title">SJP Releases Comprehensive White Paper on Rural Employment</div>
+        <div class="news-excerpt">A landmark 120-page policy document detailing a concrete roadmap for creating 2 crore rural jobs through skill-based economic interventions.</div>
+        <a href="#" class="news-read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="news-card reveal" style="transition-delay:0.3s">
+      <div class="news-img">
+        <img src="https://images.unsplash.com/photo-1509824227185-9c5a01ceba0d?w=500&q=80" alt="Initiative"/>
+        <span class="news-category">Initiative</span>
+      </div>
+      <div class="news-body">
+        <div class="news-date"><i class="fas fa-calendar"></i> March 5, 2026</div>
+        <div class="news-title">SJP Launches "Padho, Badho" Free Education Drive Across 10 States</div>
+        <div class="news-excerpt">Over 50,000 students from underprivileged families enrolled in free coaching centers set up in partnership with leading institutions.</div>
+        <a href="#" class="news-read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- GALLERY SECTION                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="gallery">
+  <div class="text-center reveal">
+    <div class="section-label">Gallery</div>
+    <h2 class="section-title">Moments That Matter</h2>
+    <p class="section-desc">Capturing the energy, unity, and resolve of millions of Indians who believe in a better tomorrow.</p>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80" alt="Rally"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Leader"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80" alt="Community"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=700&q=80" alt="Convention"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80" alt="Welfare"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80" alt="Environment"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SOCIAL MEDIA SECTION                                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="social">
+  <div class="text-center reveal">
+    <div class="section-label">Social Media</div>
+    <h2 class="section-title">Follow Us Online</h2>
+    <p class="section-desc">Join our growing online community. Follow, share, and amplify the voice of every citizen across platforms.</p>
+  </div>
+  <div class="social-grid">
+    <a href="https://instagram.com/SJPIndia" target="_blank" class="social-card instagram reveal" style="transition-delay:0.1s">
+      <div class="social-icon"><i class="fab fa-instagram"></i></div>
+      <div class="social-platform">Instagram</div>
+      <div class="social-handle">@SJPIndia</div>
+      <span class="social-follow" style="color:#E1306C">Follow Us</span>
+    </a>
+    <a href="https://facebook.com/SJPIndia" target="_blank" class="social-card facebook reveal" style="transition-delay:0.2s">
+      <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+      <div class="social-platform">Facebook</div>
+      <div class="social-handle">SJP India Official</div>
+      <span class="social-follow" style="color:#1877F2">Like Page</span>
+    </a>
+    <a href="https://twitter.com/SJPIndia" target="_blank" class="social-card twitter reveal" style="transition-delay:0.3s">
+      <div class="social-icon"><i class="fab fa-twitter"></i></div>
+      <div class="social-platform">Twitter / X</div>
+      <div class="social-handle">@SJPIndia</div>
+      <span class="social-follow" style="color:#1DA1F2">Follow Us</span>
+    </a>
+    <a href="https://youtube.com/@SJPIndia" target="_blank" class="social-card youtube reveal" style="transition-delay:0.4s">
+      <div class="social-icon"><i class="fab fa-youtube"></i></div>
+      <div class="social-platform">YouTube</div>
+      <div class="social-handle">SJP India</div>
+      <span class="social-follow" style="color:#FF0000">Subscribe</span>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CONTACT SECTION                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="text-center reveal">
+    <div class="section-label">Get in Touch</div>
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-desc">Have questions, concerns, or ideas? Our team is here to listen and respond. Reach out to us anytime.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item reveal" style="transition-delay:0.1s">
+        <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div>
+          <div class="contact-item-title">National Headquarters</div>
+          <div class="contact-item-text">SJP Bhawan, 42-A, Ashoka Road,<br/>New Delhi - 110 001, India</div>
+        </div>
+      </div>
+      <div class="contact-item reveal" style="transition-delay:0.2s">
+        <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+        <div>
+          <div class="contact-item-title">Phone</div>
+          <div class="contact-item-text">+91 11 2345 6789 (Main)<br/>1800-SJP-INDIA (Toll Free)</div>
+        </div>
+      </div>
+      <div class="contact-item reveal" style="transition-delay:0.3s">
+        <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+        <div>
+          <div class="contact-item-title">Email</div>
+          <div class="contact-item-text">info@sjpindia.org<br/>membership@sjpindia.org</div>
+        </div>
+      </div>
+      <div class="contact-item reveal" style="transition-delay:0.4s">
+        <div class="contact-item-icon"><i class="fas fa-clock"></i></div>
+        <div>
+          <div class="contact-item-title">Office Hours</div>
+          <div class="contact-item-text">Monday – Saturday: 9:00 AM – 6:00 PM<br/>Sunday: Closed</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal-right">
+      <div class="form-title">Send a Message</div>
+      <div class="form-subtitle">We'll get back to you within 24–48 hours</div>
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="c_name">Your Name *</label>
+            <input type="text" id="c_name" placeholder="Full Name" required/>
+          </div>
+          <div class="form-group">
+            <label for="c_email">Email *</label>
+            <input type="email" id="c_email" placeholder="your@email.com" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="c_subject">Subject *</label>
+          <input type="text" id="c_subject" placeholder="What is this regarding?" required/>
+        </div>
+        <div class="form-group">
+          <label for="c_message">Message *</label>
+          <textarea id="c_message" placeholder="Write your message here..." style="min-height:130px" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="contactBtn">
+          <span id="contactBtnText">Send Message <i class="fas fa-paper-plane"></i></span>
+        </button>
+        <div class="form-success" id="contactSuccess">
+          <i class="fas fa-check-circle"></i>
+          Message received! We'll respond within 24 hours.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">🇮🇳</div>
+        <div class="footer-logo-name">Sampoorna Janta Party</div>
+      </div>
+      <p class="footer-brand-text">Voice of Every Citizen. A movement built on the foundations of democracy, justice, and inclusive development for every Indian, in every corner of our great nation.</p>
+      <div style="display:flex;gap:12px;margin-top:8px">
+        <a href="https://instagram.com/SJPIndia" target="_blank" style="color:rgba(255,255,255,0.4);font-size:1.1rem;transition:color 0.3s" onmouseenter="this.style.color='#E1306C'" onmouseleave="this.style.color='rgba(255,255,255,0.4)'"><i class="fab fa-instagram"></i></a>
+        <a href="https://facebook.com/SJPIndia" target="_blank" style="color:rgba(255,255,255,0.4);font-size:1.1rem;transition:color 0.3s" onmouseenter="this.style.color='#1877F2'" onmouseleave="this.style.color='rgba(255,255,255,0.4)'"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com/SJPIndia" target="_blank" style="color:rgba(255,255,255,0.4);font-size:1.1rem;transition:color 0.3s" onmouseenter="this.style.color='#1DA1F2'" onmouseleave="this.style.color='rgba(255,255,255,0.4)'"><i class="fab fa-twitter"></i></a>
+        <a href="https://youtube.com/@SJPIndia" target="_blank" style="color:rgba(255,255,255,0.4);font-size:1.1rem;transition:color 0.3s" onmouseenter="this.style.color='#FF0000'" onmouseleave="this.style.color='rgba(255,255,255,0.4)'"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Navigate</div>
+      <a href="#about">About SJP</a>
+      <a href="#leadership">Our Leaders</a>
+      <a href="#manifesto">Manifesto</a>
+      <a href="#news">News</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Get Involved</div>
+      <a href="#join">Join as Member</a>
+      <a href="#donate">Donate</a>
+      <a href="#join">Volunteer</a>
+      <a href="#contact">Corporate Membership</a>
+      <a href="#social">Media Inquiries</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Legal</div>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">ECI Registration</a>
+      <a href="#">Annual Reports</a>
+      <a href="#">Donation Guidelines</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-text">© 2026 Sampoorna Janta Party. All rights reserved. | Registered with Election Commission of India</div>
+    <div class="footer-flag"><div class="flag-s"></div><div class="flag-w"></div><div class="flag-g"></div></div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<script>
+/* ── LOADER ── */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 2000);
+});
+
+/* ── NAVBAR ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+});
+
+/* ── BURGER MENU ── */
+function toggleMenu() {
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileOverlay');
+  burger.classList.toggle('open');
+  menu.classList.toggle('open');
+  overlay.classList.toggle('active');
+}
+function closeMenu() {
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('active');
+}
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+/* ── SCROLL REVEAL ── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+
+/* ── COUNTER ANIMATION ── */
+function animateCounter(el, target) {
+  let current = 0;
+  const step = target / 60;
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) { el.textContent = target + '+'; clearInterval(interval); }
+    else { el.textContent = Math.floor(current) + '+'; }
+  }, 30);
+}
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      animateCounter(el, parseInt(el.dataset.target));
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+/* ── DONATE AMOUNTS ── */
+let selectedAmount = 500;
+function setAmount(btn, amount) {
+  document.querySelectorAll('.donate-amount').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedAmount = amount;
+  document.getElementById('customAmount').value = '';
+}
+function handleDonate() {
+  const custom = document.getElementById('customAmount').value;
+  const amount = custom ? parseInt(custom) : selectedAmount;
+  if (!amount || amount < 1) { showToast('⚠️ Please select or enter a donation amount.', false); return; }
+  showToast(`🙏 Thank you! Redirecting to payment for ₹${amount.toLocaleString('en-IN')}...`);
+  // Integrate payment gateway (Razorpay / PayU / CCAvenue) here
+}
+
+/* ── TOAST ── */
+function showToast(msg, success = true) {
+  const t = document.getElementById('toast');
+  t.innerHTML = (success ? '<i class="fas fa-check-circle"></i> ' : '') + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+/* ── FORM VALIDATION ── */
+function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+function validatePhone(phone) { return /^[\+0-9\s\-]{7,15}$/.test(phone); }
+
+/* ── JOIN FORM ── */
+document.getElementById('joinForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fname = document.getElementById('j_fname').value.trim();
+  const lname = document.getElementById('j_lname').value.trim();
+  const email = document.getElementById('j_email').value.trim();
+  const phone = document.getElementById('j_phone').value.trim();
+  const address = document.getElementById('j_address').value.trim();
+  const state = document.getElementById('j_state').value;
+
+  if (!fname || !lname) { showToast('⚠️ Please enter your full name.', false); return; }
+  if (!validateEmail(email)) { showToast('⚠️ Please enter a valid email address.', false); return; }
+  if (!validatePhone(phone)) { showToast('⚠️ Please enter a valid phone number.', false); return; }
+  if (!address) { showToast('⚠️ Please enter your address.', false); return; }
+  if (!state) { showToast('⚠️ Please select your state.', false); return; }
+
+  const btn = document.getElementById('joinBtn');
+  btn.disabled = true;
+  document.getElementById('joinBtnText').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+  const data = {
+    name: `${fname} ${lname}`, email, phone, address, state,
+    role: document.getElementById('j_role').value,
+    message: document.getElementById('j_why').value.trim(),
+    timestamp: new Date().toISOString(), type: 'membership'
+  };
+
+  try {
+    if (window._firebaseReady) {
+      await window._addDoc(window._collection(window._db, 'memberships'), {
+        ...data, timestamp: window._serverTimestamp()
+      });
+    }
+    document.getElementById('joinForm').style.display = 'none';
+    document.getElementById('joinSuccess').style.display = 'block';
+    showToast('🎉 Welcome to SJP! Registration successful!');
+  } catch (err) {
+    console.warn('Firebase not configured. Data logged:', data);
+    document.getElementById('joinForm').style.display = 'none';
+    document.getElementById('joinSuccess').style.display = 'block';
+    showToast('🎉 Registration received! Welcome to SJP!');
+  }
+});
+
+/* ── CONTACT FORM ── */
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('c_name').value.trim();
+  const email = document.getElementById('c_email').value.trim();
+  const subject = document.getElementById('c_subject').value.trim();
+  const message = document.getElementById('c_message').value.trim();
+
+  if (!name) { showToast('⚠️ Please enter your name.', false); return; }
+  if (!validateEmail(email)) { showToast('⚠️ Please enter a valid email.', false); return; }
+  if (!subject) { showToast('⚠️ Please enter a subject.', false); return; }
+  if (!message || message.length < 10) { showToast('⚠️ Please enter a detailed message.', false); return; }
+
+  const btn = document.getElementById('contactBtn');
+  btn.disabled = true;
+  document.getElementById('contactBtnText').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+  const data = { name, email, subject, message, timestamp: new Date().toISOString(), type: 'contact' };
+
+  try {
+    if (window._firebaseReady) {
+      await window._addDoc(window._collection(window._db, 'contact_messages'), {
+        ...data, timestamp: window._serverTimestamp()
+      });
+    }
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('contactSuccess').style.display = 'block';
+    showToast('✅ Message sent successfully!');
+  } catch (err) {
+    console.warn('Firebase not configured. Message logged:', data);
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('contactSuccess').style.display = 'block';
+    showToast('✅ Message received! We\'ll respond shortly.');
+  }
+});
+</script>
+</body>
+</html>
