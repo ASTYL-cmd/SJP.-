@@ -301,24 +301,7 @@ input, textarea, select { font-family: inherit; }
   transition: var(--transition); display: inline-flex; align-items: center; gap: 9px;
 }
 .btn-secondary:hover { background: rgba(255,255,255,0.16); transform: translateY(-3px); }
-.hero-stats {
-  display: flex; justify-content: center; gap: 56px; margin-top: 80px;
-  animation: fadeUp 0.9s ease 1.2s both;
-  flex-wrap: wrap;
-}
-.hero-stat { text-align: center; }
-.hero-stat-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.4rem; font-weight: 700;
-  background: linear-gradient(135deg, var(--saffron-2), var(--saffron-light));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.hero-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.42); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
-.hero-scroll {
-  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  color: rgba(255,255,255,0.3); font-size: 0.72rem; letter-spacing: 2px;
-  text-transform: uppercase; animation: scrollBounce 2.5s infinite;
+
 }
 @keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(9px)} }
 
